@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>আনন্দ একাডেমি — প্রশিক্ষণ কেন্দ্র</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --paper: #f5f2ec;
+    --accent: #e84c1e;
+    --accent2: #f5a623;
+    --muted: #6b6560;
+    --card-bg: #ffffff;
+    --border: #e0dbd2;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Hind Siliguri', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 6vw; height: 70px;
+    background: rgba(245,242,236,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-weight: 700; font-size: 1.25rem;
+    color: var(--ink); text-decoration: none;
+  }
+  .logo-mark {
+    width: 38px; height: 38px;
+    background: var(--accent); border-radius: 8px;
+    display: grid; place-items: center;
+    font-size: 1rem; color: #fff; font-weight: 700;
+  }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.95rem; font-weight: 500;
+    color: var(--muted); text-decoration: none; transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-cta {
+    background: var(--ink); color: #fff !important;
+    padding: 8px 20px; border-radius: 100px;
+    font-size: 0.9rem !important; font-weight: 600 !important;
+    transition: background .2s !important;
+  }
+  .nav-cta:hover { background: var(--accent) !important; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 100px 6vw 60px;
+    position: relative; overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 70% at 75% 50%, #ffe8d6 0%, transparent 65%),
+      radial-gradient(ellipse 40% 50% at 20% 80%, #ffeab0 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.06;
+    background-image:
+      linear-gradient(var(--ink) 1px, transparent 1px),
+      linear-gradient(90deg, var(--ink) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content {
+    position: relative; max-width: 640px;
+    animation: fadeUp .8s ease both;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: #fff;
+    font-size: 0.82rem; font-weight: 600;
+    padding: 5px 16px; border-radius: 100px; margin-bottom: 28px;
+  }
+  .hero-badge::before {
+    content: ''; width: 6px; height: 6px;
+    background: #fff; border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+
+  h1 {
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+    font-weight: 700; line-height: 1.15;
+    color: var(--ink); margin-bottom: 24px;
+  }
+  h1 em { font-style: normal; color: var(--accent); }
+
+  .hero-sub {
+    font-size: 1.05rem; font-weight: 400;
+    color: var(--muted); line-height: 1.8;
+    max-width: 480px; margin-bottom: 40px;
+  }
+
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    padding: 14px 32px; border-radius: 100px;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-weight: 600; font-size: 1rem;
+    text-decoration: none;
+    transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 4px 20px rgba(232,76,30,.35);
+    display: inline-block;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(232,76,30,.45); }
+
+  .btn-ghost {
+    background: transparent; color: var(--ink);
+    padding: 14px 32px; border-radius: 100px;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-weight: 600; font-size: 1rem;
+    text-decoration: none;
+    border: 1.5px solid var(--ink);
+    transition: background .15s, color .15s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { background: var(--ink); color: #fff; }
+
+  .hero-visual {
+    position: absolute; right: 6vw; top: 50%; transform: translateY(-50%);
+    display: none;
+  }
+  @media (min-width: 900px) { .hero-visual { display: block; } }
+
+  .hero-img-wrap {
+    width: 400px; height: 480px;
+    border-radius: 24px; overflow: hidden;
+    border: 3px solid var(--border);
+    box-shadow: 20px 20px 0 var(--accent2), 0 20px 60px rgba(0,0,0,.1);
+    animation: fadeUp .9s .2s ease both;
+  }
+  .hero-card-inner {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 16px; padding: 40px;
+  }
+  .hero-stat {
+    width: 100%; background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 16px; padding: 20px 24px;
+    color: #fff; text-align: center;
+  }
+  .hero-stat-num {
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 2rem; font-weight: 700; color: var(--accent2);
+  }
+  .hero-stat-label { font-size: 0.85rem; color: rgba(255,255,255,.6); margin-top: 4px; }
+
+  /* ── COURSES ── */
+  #courses { padding: 100px 6vw; background: var(--paper); }
+
+  .section-header { margin-bottom: 60px; }
+  .section-tag {
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 12px; display: block;
+  }
+  .section-title {
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700; line-height: 1.2; color: var(--ink);
+  }
+  .section-sub {
+    margin-top: 14px; font-size: 1rem;
+    color: var(--muted); max-width: 500px; line-height: 1.8;
+  }
+
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 28px;
+  }
+
+  .course-card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 20px; overflow: hidden;
+    transition: transform .2s, box-shadow .2s;
+    animation: fadeUp .7s ease both;
+  }
+  .course-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,.1); }
+
+  .card-header {
+    padding: 28px 28px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .card-header.beginner     { background: linear-gradient(135deg, #e8f5e9, #f1f8f1); }
+  .card-header.intermediate { background: linear-gradient(135deg, #fff8e1, #fffaf0); }
+  .card-header.advanced     { background: linear-gradient(135deg, #fce4ec, #fff0f3); }
+
+  .level-badge {
+    display: inline-block;
+    font-size: 0.75rem; font-weight: 700;
+    padding: 4px 12px; border-radius: 100px; margin-bottom: 14px;
+  }
+  .beginner     .level-badge { background: #c8e6c9; color: #2e7d32; }
+  .intermediate .level-badge { background: #fff176; color: #f57f17; }
+  .advanced     .level-badge { background: #f8bbd0; color: #c2185b; }
+
+  .course-icon { font-size: 2.4rem; margin-bottom: 10px; display: block; }
+
+  .course-name {
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 1.25rem; font-weight: 700; color: var(--ink);
+  }
+
+  .card-body { padding: 24px 28px 28px; }
+
+  .course-desc {
+    font-size: 0.92rem; color: var(--muted);
+    line-height: 1.8; margin-bottom: 24px;
+  }
+
+  .course-meta { display: flex; gap: 20px; margin-bottom: 24px; }
+  .meta-item { display: flex; flex-direction: column; gap: 3px; }
+  .meta-label {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .meta-value {
+    font-family: 'Hind Siliguri', sans-serif;
+    font-weight: 700; font-size: 1.05rem; color: var(--ink);
+  }
+  .meta-value.fee { color: var(--accent); }
+
+  .card-enroll {
+    width: 100%; background: var(--ink); color: #fff;
+    border: none; border-radius: 12px; padding: 13px; cursor: pointer;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-weight: 600; font-size: 0.95rem;
+    transition: background .2s;
+  }
+  .card-enroll:hover { background: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer { background: var(--ink); color: #fff; padding: 60px 6vw 30px; }
+
+  .footer-top {
+    display: flex; justify-content: space-between;
+    flex-wrap: wrap; gap: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    margin-bottom: 30px;
+  }
+
+  .footer-brand .logo { color: #fff; }
+  .footer-brand .logo-mark { background: var(--accent); }
+  .footer-tagline {
+    margin-top: 14px; font-size: 0.9rem;
+    color: rgba(255,255,255,.5); max-width: 260px; line-height: 1.7;
+  }
+
+  .footer-links h4 {
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 0.85rem; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.4); margin-bottom: 16px;
+  }
+  .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a {
+    color: rgba(255,255,255,.7); text-decoration: none;
+    font-size: 0.92rem; transition: color .2s;
+  }
+  .footer-links a:hover { color: var(--accent2); }
+
+  .footer-bottom {
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 12px;
+    font-size: 0.82rem; color: rgba(255,255,255,.35);
+  }
+  .footer-bottom span strong { color: rgba(255,255,255,.6); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .4; }
+  }
+
+  .course-card:nth-child(1) { animation-delay: .1s; }
+  .course-card:nth-child(2) { animation-delay: .25s; }
+  .course-card:nth-child(3) { animation-delay: .4s; }
+</style>
+</head>
+<body>
+
+<!-- ══ NAVBAR ══ -->
+<nav>
+  <a class="logo" href="#hero">
+    <img src="Ananda.png" style="height:40px; width:auto;">
+    আনন্দ একাডেমি
+  </a>
+  <ul class="nav-links">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#courses">Courses</a></li>
+    <li><a href="#footer">Contact</a></li>
+    <li><a href="#courses" class="nav-cta">Enrolle Now</a></li>
+  </ul>
+</nav>
+
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">২০২৬ সালের ভর্তি চলছে</div>
+    <h1>আজই শিখুন সেই স্কিল,
+<br>যা <em>বদলে দিতে পারে
+</em><br>আপনার আগামীকাল।</h1>
+    <p class="hero-sub">
+      ইন্ডাস্ট্রির চাহিদা অনুযায়ী শেখুন, দক্ষতা গড়ুন, এবং আত্মবিশ্বাসের সাথে ক্যারিয়ার শুরু করুন। 
+      আনন্দ একাডেমি আপনাকে শুরু থেকে চাকরির জন্য প্রস্তুত পেশাদার হওয়ার পথ দেখায়।
+    </p>
+    <div class="hero-actions">
+      <a href="#courses" class="btn-primary">এখনই ভর্তি হন →</a>
+      <a href="#courses" class="btn-ghost">কোর্স দেখুন</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-img-wrap">
+      <div class="hero-card-inner">
+        <div class="hero-stat">
+          <div class="hero-stat-num">২,৪০০+</div>
+          <div class="hero-stat-label">Students Enrolled</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">৯৬%</div>
+          <div class="hero-stat-label">Course Completion Rate</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">৩টি</div>
+          <div class="hero-stat-label">Structured Learning Tracks</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ COURSES ══ -->
+<section id="courses">
+  <div class="section-header">
+    <span class="section-tag">আমাদের প্রোগ্রাম</span>
+    <h2 class="section-title">আপনার শিক্ষার<br>ট্র্যাক বেছে নিন</h2>
+    <p class="section-sub">
+      তিনটি সুসংগঠিত স্তর — প্রতিটি আগেরটির উপর ভিত্তি করে তৈরি,
+      বাস্তব জীবনের লক্ষ্য মাথায় রেখে ডিজাইন করা হয়েছে।
+    </p>
+  </div>
+
+  <div class="courses-grid">
+
+    <!-- বিগিনার -->
+    <div class="course-card">
+      <div class="card-header beginner">
+        <span class="level-badge">Beginner</span>
+        <span class="course-icon">🌱</span>
+        <div class="course-name">Beginner Course</div>
+      </div>
+      <div class="card-body">
+        <p class="course-desc">
+          যাদের কোনো পূর্ব অভিজ্ঞতা নেই তাদের জন্য আদর্শ। মূল ধারণা, প্রয়োজনীয় টুলস
+          এবং ব্যবহারিক অনুশীলনের মাধ্যমে প্রথম দিন থেকেই আত্মবিশ্বাস গড়ে তুলুন।
+          কোনো পূর্বশর্ত নেই।
+        </p>
+        <div class="course-meta">
+          <div class="meta-item">
+            <span class="meta-label">মেয়াদ</span>
+            <span class="meta-value">৪ সপ্তাহ</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">কোর্স ফি</span>
+            <span class="meta-value fee">৳ ৯৯৯</span>
+          </div>
+        </div>
+        <button class="card-enroll" onclick="alert('আপনার আগ্রহের জন্য ধন্যবাদ! শীঘ্রই ভর্তি শুরু হবে।')">
+          এখনই শুরু করুন
+        </button>
+      </div>
+    </div>
+
+    <!-- ইন্টারমিডিয়েট -->
+    <div class="course-card">
+      <div class="card-header intermediate">
+        <span class="level-badge">Intermediate</span>
+        <span class="course-icon">⚡</span>
+        <div class="course-name">Intermediate Course</div>
+      </div>
+      <div class="card-body">
+        <p class="course-desc">
+          যারা মূল বিষয়গুলো জানেন এবং আরও গভীরে যেতে চান তাদের জন্য। এই ট্র্যাকে
+          বাস্তব প্রকল্প, শিল্প কর্মপ্রবাহ এবং নিয়োগকর্তারা যে দক্ষতা খোঁজেন তার উপর
+          মনোযোগ দেওয়া হয়।
+        </p>
+        <div class="course-meta">
+          <div class="meta-item">
+            <span class="meta-label">মেয়াদ</span>
+            <span class="meta-value">৮ সপ্তাহ</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">কোর্স ফি</span>
+            <span class="meta-value fee">৳ ১,৯৯৯</span>
+          </div>
+        </div>
+        <button class="card-enroll" onclick="alert('আপনার আগ্রহের জন্য ধন্যবাদ! শীঘ্রই ভর্তি শুরু হবে।')">
+          এখনই শুরু করুন
+        </button>
+      </div>
+    </div>
+
+    <!-- অ্যাডভান্সড -->
+    <div class="course-card">
+      <div class="card-header advanced">
+        <span class="level-badge">Advanced</span>
+        <span class="course-icon">🚀</span>
+        <div class="course-name">Advanced Course</div>
+      </div>
+      <div class="card-body">
+        <p class="course-desc">
+          দক্ষতা অর্জনে আগ্রহী শিক্ষার্থীদের জন্য আমাদের ফ্ল্যাগশিপ প্রোগ্রাম।
+          মেন্টরশিপ সেশন, ক্যাপস্টোন প্রকল্প, পোর্টফোলিও রিভিউ এবং শিল্প অংশীদারদের
+          স্বীকৃত সার্টিফিকেট অন্তর্ভুক্ত।
+        </p>
+        <div class="course-meta">
+          <div class="meta-item">
+            <span class="meta-label">মেয়াদ</span>
+            <span class="meta-value">১২ সপ্তাহ</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">কোর্স ফি</span>
+            <span class="meta-value fee">৳ ৪,৯৯৯</span>
+          </div>
+        </div>
+        <button class="card-enroll" onclick="alert('আপনার আগ্রহের জন্য ধন্যবাদ! শীঘ্রই ভর্তি শুরু হবে।')">
+          এখনই শুরু করুন
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══ FOOTER ══ -->
+<footer id="footer">
+  <div class="footer-top">
+
+    <div class="footer-brand">
+      <a class="logo" href="#hero">
+         <img src="Ananda.png" style="height:40px; width:auto;">
+        ANANDA Academy
+      </a>
+      <p class="footer-tagline">
+        আমাদের লক্ষ্য শুধু শিক্ষা নয়—এমন দক্ষতা গড়ে তোলা, যা নতুন দরজা খুলে দেয়, ক্যারিয়ারকে এগিয়ে নিয়ে যায় এবং উজ্জ্বল ভবিষ্যৎ নির্মাণ করে।
+      </p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#courses">Courses</a></li>
+        <li><a href="#courses">Enroll Now</a></li>
+        <li><a href="#footer">Contact Us</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-links">
+      <h4>Courses</h4>
+      <ul>
+        <li><a href="#courses">Beginner</a></li>
+        <li><a href="#courses">Intermediate</a></li>
+        <li><a href="#courses">Advanced</li>
+      </ul>
+    </div>
+
+    <div class="footer-links">
+      <h4>Contacts</h4>
+      <ul>
+        <li><a href="mailto:info@anandaacademy.edu.bd">info@anandaacademy.edu.bd</a></li>
+        <li><a href="#">+৮৮০ ১৭০০-০০০০০০</a></li>
+        <li><a href="#">১২৩ শিক্ষা সরণি, ঢাকা</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; ২০২৬ <strong>আনন্দ একাডেমি</strong>। সর্বস্বত্ব সংরক্ষিত।</span>
+    <span>Mizanur Rahman</span>
+  </div>
+</footer>
+
+</body>
+</html>
